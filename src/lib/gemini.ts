@@ -5,7 +5,7 @@ import path from "path";
 import os from "os";
 
 const apiKey = process.env.GEMINI_API_KEY!;
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI(apiKey, { apiVersion: "v1" });
 const fileManager = new GoogleAIFileManager(apiKey);
 
 export async function transcribeAudio(file: File) {
