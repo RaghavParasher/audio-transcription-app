@@ -21,7 +21,7 @@ export async function transcribeAudio(file: File) {
       displayName: file.name,
     });
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
     const result = await model.generateContent([
       {
