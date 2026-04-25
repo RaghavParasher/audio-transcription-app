@@ -39,9 +39,9 @@ export async function transcribeAudio(file: File) {
     // await fileManager.deleteFile(uploadResult.file.name);
 
     return result.response.text();
-  } catch (error) {
+  } catch (error: any) {
     if (fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath);
-    console.error("Transcription error:", error);
-    throw new Error("Failed to transcribe audio");
+    console.error("Gemini API Error Detail:", error);
+    throw new Error(`Gemini Error: ${error.message || "Unknown API error"}`);
   }
 }

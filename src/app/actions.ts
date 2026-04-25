@@ -37,6 +37,7 @@ export async function transcribeAction(formData: FormData) {
     revalidatePath("/dashboard");
     return { success: true };
   } catch (error: any) {
-    return { success: false, error: error.message };
+    console.error("Action Error:", error);
+    return { success: false, error: error.message || "Internal server error during transcription" };
   }
 }
