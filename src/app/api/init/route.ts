@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { db, runMigrations } from "@/db";
-import { user } from "@/db/schema";
+import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
@@ -12,8 +12,8 @@ export async function GET() {
   const adminPassword = "AdminTranscribe2026!";
 
   try {
-    const existingAdmin = await db.query.user.findFirst({
-      where: eq(user.email, adminEmail),
+    const existingAdmin = await db.query.users.findFirst({
+      where: eq(users.email, adminEmail),
     });
 
     if (existingAdmin) {
