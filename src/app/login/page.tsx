@@ -68,7 +68,7 @@ export default function LoginPage() {
           {error && <p style={{ color: "var(--error)", fontSize: "0.9rem", marginBottom: "1rem" }}>{error}</p>}
 
           <button type="submit" className="button" disabled={loading}>
-            {loading ? <span className="spinner"></span> : "Sign In"}
+            {loading ? "Authenticating..." : "Sign In"}
           </button>
         </form>
       </div>
