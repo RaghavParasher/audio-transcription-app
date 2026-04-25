@@ -1,10 +1,12 @@
 import { auth } from "@/lib/auth";
-import { db } from "@/db";
+import { db, runMigrations } from "@/db";
 import { user } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  // Ensure tables exist
+  await runMigrations();
   const adminEmail = "admin@example.com";
   const adminUsername = "admin";
   const adminPassword = "AdminTranscribe2026!";
