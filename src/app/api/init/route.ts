@@ -31,6 +31,10 @@ export async function GET() {
 
     return NextResponse.json({ message: "Admin created successfully" });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Initialization error details:", error);
+    return NextResponse.json({ 
+      error: error.message,
+      detail: error.detail || error.hint || "Check server logs for full details" 
+    }, { status: 500 });
   }
 }
