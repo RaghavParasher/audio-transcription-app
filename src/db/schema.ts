@@ -9,6 +9,7 @@ export const users = pgTable("users", {
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 	username: text("username").unique(),
+	displayUsername: text("display_username"),
 });
 
 export const session = pgTable("session", {
