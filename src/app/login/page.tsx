@@ -34,6 +34,28 @@ export default function LoginPage() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const { error } = await authClient.signIn.username({
+        username: "admin",
+        password: "AdminTranscribe2026!",
+      });
+
+      if (error) {
+        setError(error.message || "Invalid credentials");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div className="card" style={{ width: "100%", maxWidth: "400px" }}>
@@ -69,6 +91,20 @@ export default function LoginPage() {
 
           <button type="submit" className="button" disabled={loading}>
             {loading ? "Authenticating..." : "Sign In"}
+          </button>
+
+          <button 
+            type="button" 
+            onClick={handleDemoLogin} 
+            className="button"
+            style={{ 
+              marginTop: "0.75rem", 
+              background: "var(--secondary-gradient)", 
+              boxShadow: "0 4px 20px rgba(6, 182, 212, 0.15)" 
+            }}
+            disabled={loading}
+          >
+            {loading ? "Authenticating..." : "One-Click Demo Access"}
           </button>
         </form>
       </div>
