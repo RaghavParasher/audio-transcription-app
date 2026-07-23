@@ -1,7 +1,39 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 
+const MODAL_CONTENT = {
+  features: {
+    title: "🚀 Advanced Audio Intelligence Features",
+    text: "AudioTranscribe is packed with features: verbatim transcription for over 100 languages, multi-speaker identification, custom audio player with interactive waveform rendering, and AI summaries that extract action items and categorize topics in real-time."
+  },
+  security: {
+    title: "🔒 Enterprise-Grade Security",
+    text: "We take your privacy seriously. All audio uploads are processed securely via encrypted connections. Local files are stored on secure databases, and all temporary media processed by Google Gemini is automatically scrubbed from Vercel/Google servers after 48 hours."
+  },
+  api: {
+    title: "⚙️ Developer API Access",
+    text: "Automate your workflows by integrating AudioTranscribe directly into your tools. Access REST API endpoints to programmatically upload recordings, fetch transcription JSON outputs, or set up webhook listener endpoints. API documentation is releasing soon!"
+  },
+  about: {
+    title: "👋 About AudioTranscribe",
+    text: "AudioTranscribe was founded in 2026 to simplify the way professionals, creators, and teams document verbal communication. By leveraging Google's state-of-the-art Gemini LLM, we turn unorganized voice recordings into structured, actionable documents."
+  },
+  blog: {
+    title: "✍️ Official News & Updates",
+    text: "Read our official blog for productivity tips, case studies, and engineering updates about audio processing and AI transcription. Our first article, 'How AI Summarization Saves 5 Hours of Meeting Notes Weekly', is coming next week!"
+  },
+  privacy: {
+    title: "🛡️ Privacy & Data Retention Policy",
+    text: "We collect only basic metadata (such as your username and audio file name) to display on your dashboard. Audio files are stored as secure binary data. We never sell your data or use it to train machine learning models."
+  }
+};
+
 export default function LandingPage() {
+  const [activeModal, setActiveModal] = useState<{ title: string; text: string } | null>(null);
+
   return (
     <div className={styles.container}>
       {/* Navbar */}
@@ -9,7 +41,7 @@ export default function LandingPage() {
         <div className={styles.navContent}>
           <div className={styles.logo}>Audio<span>Transcribe</span></div>
           <div className={styles.navLinks}>
-            <a href="#features">Features</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveModal(MODAL_CONTENT.features); }}>Features</a>
             <a href="#how-it-works">How it works</a>
             <a href="#pricing">Pricing</a>
             <Link href="/login" className={styles.loginBtn}>Admin Login</Link>
@@ -141,21 +173,92 @@ export default function LandingPage() {
           </div>
           <div className={styles.footerLinks}>
             <h4>Product</h4>
-            <a href="#">Features</a>
-            <a href="#">Security</a>
-            <a href="#">API</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveModal(MODAL_CONTENT.features); }}>Features</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveModal(MODAL_CONTENT.security); }}>Security</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveModal(MODAL_CONTENT.api); }}>API</a>
           </div>
           <div className={styles.footerLinks}>
             <h4>Company</h4>
-            <a href="#">About</a>
-            <a href="#">Blog</a>
-            <a href="#">Privacy</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveModal(MODAL_CONTENT.about); }}>About</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveModal(MODAL_CONTENT.blog); }}>Blog</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveModal(MODAL_CONTENT.privacy); }}>Privacy</a>
           </div>
         </div>
         <div className={styles.footerBottom}>
           <p>&copy; 2026 AudioTranscribe AI. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Interactive Modal Popup */}
+      {activeModal && (
+        <div 
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(3, 3, 3, 0.8)",
+            backdropFilter: "blur(12px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+            padding: "20px"
+          }} 
+          onClick={() => setActiveModal(null)}
+        >
+          <div 
+            style={{
+              background: "var(--surface)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid var(--surface-border)",
+              borderRadius: "24px",
+              padding: "35px",
+              maxWidth: "500px",
+              width: "100%",
+              boxShadow: "0 25px 60px -15px rgba(0,0,0,0.9)",
+              position: "relative",
+              fontFamily: "inherit"
+            }} 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={{ 
+              fontSize: "1.45rem", 
+              fontWeight: 800, 
+              marginBottom: "1.25rem", 
+              color: "#fff", 
+              fontFamily: "'Outfit', sans-serif" 
+            }}>
+              {activeModal.title}
+            </h3>
+            <p style={{ 
+              color: "var(--text-muted)", 
+              lineHeight: 1.7, 
+              fontSize: "0.95rem", 
+              marginBottom: "2rem" 
+            }}>
+              {activeModal.text}
+            </p>
+            <button 
+              className="logout-btn" 
+              onClick={() => setActiveModal(null)} 
+              style={{ 
+                width: "100%", 
+                border: "1px solid var(--primary)", 
+                color: "#fff", 
+                background: "var(--primary-gradient)",
+                padding: "12px",
+                fontWeight: 700,
+                fontSize: "0.95rem",
+                borderRadius: "10px"
+              }}
+            >
+              Okay, Got It!
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
