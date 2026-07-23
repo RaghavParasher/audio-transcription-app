@@ -53,5 +53,9 @@ export const transcripts = pgTable("transcripts", {
   adminId: text("admin_id").notNull().references(() => users.id),
   text: text("text").notNull(),
   fileName: text("file_name").notNull(),
+  audioUrl: text("audio_url"),
+  summary: text("summary"),
+  actionItems: text("action_items"),
+  tags: text("tags"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

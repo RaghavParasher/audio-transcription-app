@@ -6,6 +6,8 @@ import { transcripts } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
+import fs from "fs";
+import path from "path";
 
 export async function transcribeAction(formData: FormData) {
   const session = await auth.api.getSession({
@@ -25,18 +27,41 @@ export async function transcribeAction(formData: FormData) {
     throw new Error("File too large");
   }
 
+  // Create public/uploads directory if it doesn't exist
+  const uploadsDir = path.join(process.cwd(), "public", "uploads");
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+
+  // Generate unique filename and write buffer
+  const fileExtension = file.name.split(".").pop() || "mp3";
+  const uniqueFileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExtension}`;
+  const filePath = path.join(uploadsDir, uniqueFileName);
+  const buffer = Buffer.from(await file.arrayBuffer());
+  fs.writeFileSync(filePath, buffer);
+  
+  const audioUrl = `/uploads/${uniqueFileName}`;
+
   try {
-    const text = await transcribeAudio(file);
+    const result = await transcribeAudio(file);
 
     await db.insert(transcripts).values({
       adminId: session.user.id,
-      text: text,
+      text: result.transcript,
       fileName: file.name,
+      audioUrl: audioUrl,
+      summary: result.summary,
+      actionItems: JSON.stringify(result.actionItems),
+      tags: result.tags.join(", "),
     });
 
     revalidatePath("/dashboard");
     return { success: true };
   } catch (error: any) {
+    // Cleanup the uploaded file if transcription fails
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
     console.error("Action Error:", error);
     return { success: false, error: error.message || "Internal server error during transcription" };
   }

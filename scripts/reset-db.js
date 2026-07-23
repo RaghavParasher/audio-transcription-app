@@ -1,8 +1,14 @@
+require('dotenv').config();
 const { Client } = require('pg');
 
 async function dropAll() {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    console.error("No DATABASE_URL found in environment!");
+    process.exit(1);
+  }
   const client = new Client({
-    connectionString: "postgresql://postgres:CUmftfRebnvgiXTyQOKaRGwROGjahXKV@shortline.proxy.rlwy.net:14313/railway",
+    connectionString,
   });
   await client.connect();
   console.log("Connected to DB");
@@ -10,7 +16,6 @@ async function dropAll() {
     await client.query(`
       DROP SCHEMA public CASCADE;
       CREATE SCHEMA public;
-      GRANT ALL ON SCHEMA public TO postgres;
       GRANT ALL ON SCHEMA public TO public;
     `);
     console.log("All tables dropped and public schema recreated.");
