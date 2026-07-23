@@ -54,6 +54,7 @@ export const transcripts = pgTable("transcripts", {
   text: text("text").notNull(),
   fileName: text("file_name").notNull(),
   audioUrl: text("audio_url"),
+  audioData: text("audio_data"),
   summary: text("summary"),
   actionItems: text("action_items"),
   tags: text("tags"),
