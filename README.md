@@ -36,15 +36,15 @@
 
 ```mermaid
 graph TD
-    User([User Client]) -->|1. Record or Upload Audio| Dashboard[Dashboard View]
-    Dashboard -->|2. Send Form Data| ServerAction[Next.js Server Action]
-    ServerAction -->|3. Upload file| GeminiAPI[Google Gemini File API]
-    ServerAction -->|4. Generate Transcript & Insights| GeminiModel[gemini-flash-latest]
-    ServerAction -->|5. Store Base64 Data & Metadata| NeonDB[(Neon Postgres Cloud)]
+    User(["User Client"]) -->|"1. Record or Upload Audio"| Dashboard["Dashboard View"]
+    Dashboard -->|"2. Send Form Data"| ServerAction["Next.js Server Action"]
+    ServerAction -->|"3. Upload file"| GeminiAPI["Google Gemini File API"]
+    ServerAction -->|"4. Generate Transcript & Insights"| GeminiModel["gemini-flash-latest"]
+    ServerAction -->|"5. Store Base64 Data & Metadata"| NeonDB[("Neon Postgres Cloud")]
     
-    Dashboard -->|6. Load Wavesurfer| WavePlayer[Wavesurfer Waveform Player]
-    WavePlayer -->|7. Fetch binary audio stream| AudioAPI[/api/audio/:id Route]
-    AudioAPI -->|8. Fetch Base64 data| NeonDB
+    Dashboard -->|"6. Load Wavesurfer"| WavePlayer["Wavesurfer Waveform Player"]
+    WavePlayer -->|"7. Fetch binary audio stream"| AudioAPI["/api/audio/:id Route"]
+    AudioAPI -->|"8. Fetch Base64 data"| NeonDB
 ```
 
 ---

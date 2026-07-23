@@ -52,7 +52,7 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <div className={styles.badge}>Powered by Gemini 2.0</div>
+          <div className={styles.badge}>Powered by Gemini 1.5 Flash</div>
           <h1>Transform Your Audio into <span className={styles.gradientText}>Flawless Text</span></h1>
           <p>The world's most advanced AI-powered transcription platform. Accurate, fast, and designed for professionals.</p>
           <div className={styles.heroActions}>
