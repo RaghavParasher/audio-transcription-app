@@ -6,6 +6,10 @@
 [![Powered by Gemini](https://img.shields.io/badge/AI-Google%20Gemini%201.5%20Flash-blue?style=for-the-badge&logo=google-gemini)](https://ai.google.dev/)
 [![Database](https://img.shields.io/badge/Database-Neon%20Postgres-00e5a3?style=for-the-badge&logo=postgresql)](https://neon.tech/)
 
+<br/>
+<img src="./mockup.jpg" width="100%" alt="AudioTranscribe AI Dashboard Mockup" />
+<br/>
+
 ---
 
 ## 🌟 Core Features
